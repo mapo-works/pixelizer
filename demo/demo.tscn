@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://demo/Demo.cs" id="1_demo"]
+[ext_resource type="PackedScene" path="res://addons/pixelizer/pixel_stage.tscn" id="2_stage"]
+
+[node name="Demo" type="Node"]
+script = ExtResource("1_demo")
+
+[node name="PixelStage" parent="." instance=ExtResource("2_stage")]

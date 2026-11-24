@@ -1,0 +1,103 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://dbphyg55mbcip" path="res://addons/pixelizer/PixelViewport.cs" id="1_pixelvp"]
+[ext_resource type="Script" uid="uid://t0cakei2fbvl" path="res://addons/pixelizer/PixelCameraRig.cs" id="2_camrig"]
+[ext_resource type="Shader" uid="uid://cbtugt5htfvdx" path="res://addons/pixelizer/shaders/outline_post.gdshader" id="3_outline"]
+[ext_resource type="Shader" uid="uid://bembhaooognh3" path="res://addons/pixelizer/shaders/outline_post_silhouette.gdshader" id="4_silhouette"]
+[ext_resource type="Script" uid="uid://14gljfvmipl" path="res://addons/pixelizer/DebugOverlay.cs" id="5_debug"]
+
+[sub_resource type="Environment" id="Env_world"]
+background_mode = 1
+background_color = Color(0.47, 0.62, 0.78, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.45, 0.5, 0.7, 1)
+ambient_light_energy = 0.55
+
+[sub_resource type="ShaderMaterial" id="Mat_outline"]
+render_priority = 0
+shader = ExtResource("3_outline")
+shader_parameter/enabled = true
+shader_parameter/depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.1
+shader_parameter/min_facing = 0.3
+shader_parameter/outline_strength = 0.6
+shader_parameter/crease_strength = 0.2
+shader_parameter/outline_color = Color(0.05, 0.03, 0.08, 1)
+
+[sub_resource type="QuadMesh" id="Mesh_fullscreen_quad"]
+material = SubResource("Mat_outline")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="Mat_silhouette"]
+render_priority = 0
+shader = ExtResource("4_silhouette")
+shader_parameter/enabled = true
+shader_parameter/depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.1
+shader_parameter/min_facing = 0.3
+shader_parameter/outline_strength = 0.6
+shader_parameter/crease_strength = 0.0
+shader_parameter/outline_color = Color(0.05, 0.03, 0.08, 1)
+
+[sub_resource type="QuadMesh" id="Mesh_silhouette_quad"]
+material = SubResource("Mat_silhouette")
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="PixelStage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_pixelvp")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(642, 362)
+render_target_update_mode = 4
+
+[node name="Sun" type="DirectionalLight3D" parent="SubViewport"]
+transform = Transform3D(0.90630776, 0.34618863, -0.24240388, 0, 0.57357645, 0.81915206, 0.42261827, -0.74240386, 0.5198368, 0, 40, 0)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 1.1
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 60.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport"]
+environment = SubResource("Env_world")
+
+[node name="Stage" type="Node3D" parent="SubViewport"]
+
+[node name="CameraRig" type="Node3D" parent="SubViewport" node_paths=PackedStringArray("PixelViewport", "Sun")]
+script = ExtResource("2_camrig")
+PixelViewport = NodePath("../..")
+Sun = NodePath("../Sun")
+FollowTarget = false
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
+projection = 1
+current = true
+size = 22.5
+far = 120.0
+
+[node name="OutlinePass" type="MeshInstance3D" parent="SubViewport/CameraRig/Camera3D"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("Mesh_fullscreen_quad")
+
+[node name="SilhouettePass" type="MeshInstance3D" parent="SubViewport/CameraRig/Camera3D/OutlinePass"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("Mesh_silhouette_quad")
+
+[node name="DebugOverlay" type="CanvasLayer" parent="." node_paths=PackedStringArray("PixelViewport", "CameraRig", "OutlinePass")]
+layer = 50
+script = ExtResource("5_debug")
+PixelViewport = NodePath("..")
+CameraRig = NodePath("../SubViewport/CameraRig")
+OutlinePass = NodePath("../SubViewport/CameraRig/Camera3D/OutlinePass")

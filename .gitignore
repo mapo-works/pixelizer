@@ -1,0 +1,10 @@
+# Godot cache, imported assets and C# build output (all regenerated)
+.godot/
+
+# IDEs
+.vs/
+.idea/
+*.user
+
+# Python bytecode
+__pycache__/
