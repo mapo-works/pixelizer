@@ -10,9 +10,10 @@ it is thanks to people who shared what they know. Thank you all.
   moves in whole pixels and hands the leftover sub-pixel shift to the upscaled image, light in a few flat bands,
   and one-pixel silhouette and crease lines. Pixelizer is our Godot take on that approach. No code of theirs is in
   it; the ideas are theirs.
-- **[Eduardo Schildt](https://github.com/EduardoSchildt)**: the
-  [3DPixelArt_Tutorial_Vegetation](https://github.com/EduardoSchildt/3DPixelArt_Tutorial_Vegetation) project (MIT),
-  3D pixel art in Godot 4 with an edge-detection outline pass, which we studied while building ours.
+- **[Eduardo Schildt](https://www.youtube.com/@eduardoschildt)**: the
+  [Godot 3D PixelArt Vegetation Demo](https://pixelagegames.itch.io/3d-pixelart-vegetation) and its video tutorial
+  [Stylized Grass & Trees for Pixel Art 3D in Godot 4](https://www.youtube.com/watch?v=iPbYzFWECz4): 3D pixel art
+  in Godot 4 with an edge-detection outline pass, which we studied while building ours.
 
 ## Along the way
 
