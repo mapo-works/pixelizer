@@ -1,3 +1,5 @@
+#nullable enable // the addon builds the same in projects that leave <Nullable> off
+
 using Godot;
 
 namespace Pixelizer;

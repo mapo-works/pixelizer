@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Pixelizer"
-config/description="The studio's 3D pixel-art look as one addon: low-res integer upscale, pixel-snapped camera, toon light, outlines."
+config/description="Real 3D scenes that look like pixel art: low-res integer upscale, pixel-snapped camera, toon light, outlines."
 run/main_scene="res://demo/demo.tscn"
 config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"

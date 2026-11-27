@@ -1,10 +1,12 @@
 # Pixelizer
 
-The studio's 3D pixel-art look, as one Godot addon: a real 3D scene rendered small and upscaled with hard pixels,
-toon-lit in flat bands, outlined one low-res pixel wide, through a camera that moves in whole pixels so nothing
-shimmers. Every studio project (Landlord, Dudemaker, the games) gets the same copy, so they all look alike.
+A 3D pixel-art look as one Godot addon: a real 3D scene rendered small and upscaled with hard pixels, toon-lit in
+flat bands, outlined one low-res pixel wide, through a camera that moves in whole pixels so nothing shimmers. Give
+every project the same copy and they all look alike.
 
-Godot **4.7 .NET** (C#), **Forward+** (the outline pass reads the normal-roughness buffer).
+Godot **4.7 .NET** (C#), **Forward+** (the outline pass reads the normal-roughness buffer). MIT license
+(`LICENSE`), © 2026 mapo works; who helped: `CREDITS.md`; versions: `CHANGELOG.md`.
+Source, demo and issues: <https://github.com/mapo-works/pixelizer>.
 
 ## What's in it
 
@@ -25,7 +27,9 @@ Godot **4.7 .NET** (C#), **Forward+** (the outline pass reads the normal-roughne
 
 ## Use it
 
-1. Copy the addon in: `python3 ../pixelizer/tools/install.py <project>` (also sets the project settings below).
+1. Put the addon in `addons/pixelizer/` (Asset Store, by hand, or `python3 tools/install.py <project>` from the
+   source repository, which also sets the project settings below) and build the C# solution. Nothing to enable in
+   Project Settings → Plugins: these are plain C# nodes and shaders.
 2. Instance `res://addons/pixelizer/pixel_stage.tscn` as the main view (full rect), or build the same tree yourself:
    `PixelViewport (Control) → SubViewport → CameraRig (PixelCameraRig) → Camera3D → OutlinePass → SilhouettePass`.
 3. Give meshes a `ShaderMaterial` with `toon.gdshader` (or one of its variants). Author textures at 16 px per metre.
@@ -66,5 +70,5 @@ default 1.0 on code-built materials the outline pass sees.
 
 ## Where it lives
 
-The master copy is the `pixelizer` project (its own repo, with a demo scene). Projects carry copies and never edit
-them: change the look there, check it in the demo, then refresh each project with `tools/install.py`.
+The master copy is the `pixelizer` repository, with a demo scene. Projects carry copies and never edit them: change
+the look there, check it in the demo, then refresh each project with `tools/install.py`.
